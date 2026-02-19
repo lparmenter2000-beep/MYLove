@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For You 💗</title>
+  <meta name="theme-color" content="#ff5fa2" />
+  <style>
+    :root{
+      --pink:#ff5fa2;
+      --hot:#ff2f86;
+      --soft:#ffd1e6;
+      --bg1:#ff86c8;
+      --bg2:#ffb6da;
+      --text:#ffffff;
+      --shadow: 0 18px 50px rgba(0,0,0,.18);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    /* Screen 1 */
+    .gate{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(circle at 30% 20%, #fff 0%, var(--soft) 18%, var(--pink) 55%, #b10057 120%);
+      position:relative;
+    }
+    .card{
+      width:min(520px, 92vw);
+      background: rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:26px;
+      padding:28px 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      text-align:center;
+    }
+    .card h1{
+      margin:0 0 10px;
+      font-size: clamp(28px, 4.2vw, 40px);
+      letter-spacing:.3px;
+    }
+    .card p{
+      margin:0 0 18px;
+      opacity:.95;
+      line-height:1.35;
+      font-size: clamp(15px, 2.6vw, 18px);
+    }
+    .btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      padding:14px 18px;
+      width:min(320px, 78vw);
+      border-radius:999px;
+      font-weight:800;
+      font-size:18px;
+      color:white;
+      background: linear-gradient(135deg, var(--hot), #ff7ac2, #ffd1e6);
+      box-shadow: 0 12px 30px rgba(255,47,134,.35);
+      transition: transform .08s ease, filter .18s ease;
+    }
+    .btn:active{transform: scale(.98)}
+    .tiny{
+      margin-top:12px;
+      font-size:12px;
+      opacity:.85;
+    }
+
+    /* Screen 2 */
+    .love{
+      min-height:100vh;
+      display:none;
+      position:relative;
+      background: radial-gradient(circle at 20% 10%, #fff 0%, var(--bg2) 20%, var(--bg1) 55%, #8b0043 120%);
+      overflow:hidden;
+    }
+    .love.show{display:block}
+
+    /* Glitter overlay */
+    .glitter{
+      position:absolute;
+      inset:-30px;
+      pointer-events:none;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 2px),
+        radial-gradient(circle, rgba(255,255,255,.7) 0 1px, transparent 2px),
+        radial-gradient(circle, rgba(255,255,255,.6) 0 1px, transparent 2px);
+      background-size: 140px 140px, 190px 190px, 240px 240px;
+      background-position: 0 0, 40px 70px, 80px 30px;
+      opacity:.28;
+      filter: blur(.2px);
+      animation: shimmer 7s linear infinite;
+    }
+    @keyframes shimmer{
+      from{transform: translate3d(0,0,0)}
+      to{transform: translate3d(-120px, 160px, 0)}
+    }
+
+    /* Falling hearts */
+    .hearts{
+      position:absolute; inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .heart{
+      position:absolute;
+      top:-10vh;
+      font-size: 18px;
+      opacity:.85;
+      animation: fall linear infinite;
+      text-shadow: 0 6px 18px rgba(0,0,0,.12);
+    }
+    @keyframes fall{
+      to{
+        transform: translateY(120vh) rotate(360deg);
+        opacity:.95;
+      }
+    }
+
+    /* Content layout */
+    .wrap{
+      position:relative;
+      z-index:2;
+      padding: 26px 16px 50px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .headline{
+      text-align:center;
+      margin: 10px auto 18px;
+    }
+    .headline h2{
+      margin:0;
+      font-size: clamp(26px, 4.5vw, 44px);
+    }
+    .headline .sub{
+      margin:10px auto 0;
+      font-size: clamp(14px, 2.8vw, 18px);
+      opacity:.92;
+      max-width: 60ch;
+      line-height:1.35;
+    }
+    .bubble{
+      margin: 18px auto;
+      width: min(720px, 96vw);
+      background: rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius: 22px;
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .bubble ul{
+      margin:0;
+      padding:0 0 0 18px;
+      line-height:1.5;
+      font-size: 16px;
+    }
+    .bubble li{ margin: 8px 0; }
+
+    /* Photo grid */
+    .grid{
+      margin: 18px auto 0;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      width: min(860px, 96vw);
+    }
+    @media (min-width: 840px){
+      .grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    .ph{
+      position:relative;
+      border-radius: 18px;
+      overflow:hidden;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow: 0 14px 40px rgba(0,0,0,.18);
+      aspect-ratio: 1 / 1;
+    }
+    .ph img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.01);
+    }
+    .ph span{
+      position:absolute;
+      left:10px; bottom:10px;
+      background: rgba(0,0,0,.22);
+      padding:6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      backdrop-filter: blur(6px);
+    }
+
+    .footer{
+      text-align:center;
+      margin-top: 22px;
+      opacity:.92;
+      font-size: 14px;
+    }
+    .mini-btn{
+      margin-top: 14px;
+      background: rgba(255,255,255,.16);
+      color: white;
+      border: 1px solid rgba(255,255,255,.24);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen 1 -->
+  <section class="gate" id="gate">
+    <div class="card">
+      <h1>Hey you 💗</h1>
+      <p>
+        I made you something small.<br/>
+        Tap the button when you’re ready.
+      </p>
+      <button class="btn" id="openBtn">Open me ✨</button>
+      <div class="tiny">P.S. you’re my favorite person.</div>
+    </div>
+  </section>
+
+  <!-- Screen 2 -->
+  <section class="love" id="love">
+    <div class="glitter"></div>
+    <div class="hearts" id="hearts"></div>
+
+    <div class="wrap">
+      <div class="headline">
+        <h2>I love you forever ♾️💗</h2>
+        <div class="sub">
+          No matter what kind of day you’re having, I’m on your side.
+          We’re a team. Always.
+        </div>
+      </div>
+
+      <div class="bubble">
+        <ul>
+          <li>We are a team — and I’ve got you.</li>
+          <li>You’re doing your best, and I’m proud of you.</li>
+          <li>You make my world softer, brighter, and happier.</li>
+          <li>I love you more than you know.</li>
+        </ul>
+      </div>
+
+      <!-- Photos: replace the src values after you upload your images -->
+      <div class="grid">
+        <div class="ph"><img src="photos/1.jpg" alt="Us 1"><span>💗 us</span></div>
+        <div class="ph"><img src="photos/2.jpg" alt="Us 2"><span>✨ my favorite</span></div>
+        <div class="ph"><img src="photos/3.jpg" alt="Us 3"><span>🫶 always</span></div>
+        <div class="ph"><img src="photos/4.jpg" alt="Us 4"><span>🌸 forever</span></div>
+        <div class="ph"><img src="photos/5.jpg" alt="Us 5"><span>💞 home</span></div>
+        <div class="ph"><img src="photos/6.jpg" alt="Us 6"><span>🥰 you</span></div>
+      </div>
+
+      <div class="footer">
+        If you need a hug, consider this one delivered. 🤍
+        <br />
+        <button class="mini-btn" id="replay">Replay the hearts</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Gate -> Love screen
+    const gate = document.getElementById('gate');
+    const love = document.getElementById('love');
+    document.getElementById('openBtn').addEventListener('click', () => {
+      gate.style.display = 'none';
+      love.classList.add('show');
+      startHearts();
+      // little mobile-friendly scroll reset
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Hearts generator
+    const heartsEl = document.getElementById('hearts');
+    const heartChars = ["💗","💖","💘","💝","💕","💞","💓","❤️","✨","🌸"];
+    let heartTimers = [];
+
+    function clearHearts(){
+      heartTimers.forEach(t => clearTimeout(t));
+      heartTimers = [];
+      heartsEl.innerHTML = "";
+    }
+
+    function startHearts(){
+      clearHearts();
+      const total = 55; // change for more/less
+      for (let i = 0; i < total; i++){
+        const t = setTimeout(() => dropHeart(), i * 120);
+        heartTimers.push(t);
+      }
+    }
+
+    function dropHeart(){
+      const d = document.createElement('div');
+      d.className = 'heart';
+      d.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+      const left = Math.random() * 100;
+      const size = 16 + Math.random() * 22;
+      const dur = 4.5 + Math.random() * 5.5;
+      d.style.left = left + "vw";
+      d.style.fontSize = size + "px";
+      d.style.animationDuration = dur + "s";
+      d.style.filter = `drop-shadow(0 10px 18px rgba(0,0,0,.12))`;
+      heartsEl.appendChild(d);
+      d.addEventListener('animationend', () => d.remove());
+    }
+
+    document.getElementById('replay').addEventListener('click', startHearts);
+  </script>
+</body>
+</html>
